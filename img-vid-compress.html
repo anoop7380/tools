@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Compress your images and videos online with our fully responsive compression tool. Optimize files for web use with adjustable compression levels.">
+    <meta name="keywords" content="image compression, video compression, optimize files, compress images, compress videos">
+    <meta name="author" content="Your Name">
+    <title>Image & Video Compression Tool</title>
+    <style>
+        /* General Styles */
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background: linear-gradient(135deg, #f9f9f9, #e6f3ff);
+            color: #333;
+        }
+
+        header {
+            background: linear-gradient(135deg, #007bff, #00a8ff);
+            color: #fff;
+            padding: 20px;
+            width: 100%;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        main {
+            width: 90%;
+            max-width: 800px;
+            margin: 20px auto;
+        }
+
+        /* Tool Sections */
+        .tool-section {
+            background: #fff;
+            padding: 25px;
+            margin-bottom: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .tool-section h2 {
+            margin-bottom: 20px;
+            color: #007bff;
+        }
+
+        .tool-section input[type="file"] {
+            margin: 15px 0;
+            padding: 10px;
+            border: 2px dashed #007bff;
+            border-radius: 8px;
+            background: #f0f8ff;
+            color: #007bff;
+            cursor: pointer;
+        }
+
+        .tool-section label {
+            font-size: 16px;
+            font-weight: bold;
+            color: #007bff;
+        }
+
+        .tool-section input[type="range"] {
+            width: 80%;
+            margin: 15px 0;
+        }
+
+        .tool-section button {
+            padding: 10px 20px;
+            background: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .tool-section button:hover {
+            background: #005bb5;
+        }
+
+        /* Result Sections */
+        .result-section {
+            display: none;
+            margin-top: 20px;
+        }
+
+        .result-section img, .result-section video {
+            max-width: 100%;
+            height: auto;
+            margin-top: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .result-section a {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            background: #28a745;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: bold;
+            transition: background 0.3s ease;
+        }
+
+        .result-section a:hover {
+            background: #218838;
+        }
+
+        /* Ad Section */
+        #ad-section {
+            margin-top: 20px;
+            text-align: center;
+            padding: 20px;
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Footer */
+        footer {
+            background: linear-gradient(135deg, #007bff, #00a8ff);
+            color: #fff;
+            text-align: center;
+            padding: 15px;
+            width: 100%;
+            position: fixed;
+            bottom: 0;
+            box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=YOUR_ADSENSE_AD_UNIT_ID" crossorigin="anonymous"></script>
+</head>
+<body>
+    <header>
+        <h1>Image & Video Compression Tool</h1>
+    </header>
+    <main>
+        <!-- Image Compression Tool -->
+        <section class="tool-section">
+            <h2>Image Compression</h2>
+            <input type="file" id="image-upload" accept="image/*">
+            <label for="image-compression-level">Compression Level: <span id="image-compression-value">50</span>%</label>
+            <input type="range" id="image-compression-level" min="1" max="100" value="50">
+            <button id="compress-image-btn">Compress Image</button>
+            <div class="result-section" id="image-result-section">
+                <img id="compressed-image" src="" alt="Compressed Image">
+                <a id="download-image-link" href="#" download="compressed-image.jpg">Download Compressed Image</a>
+            </div>
+        </section>
+
+        <!-- Video Compression Tool -->
+        <section class="tool-section">
+            <h2>Video Compression</h2>
+            <input type="file" id="video-upload" accept="video/*">
+            <label for="video-compression-level">Compression Level: <span id="video-compression-value">50</span>%</label>
+            <input type="range" id="video-compression-level" min="1" max="100" value="50">
+            <button id="compress-video-btn">Compress Video</button>
+            <div class="result-section" id="video-result-section">
+                <video id="compressed-video" controls></video>
+                <a id="download-video-link" href="#" download="compressed-video.mp4">Download Compressed Video</a>
+            </div>
+        </section>
+
+        <!-- Ad Section -->
+        <section id="ad-section">
+            <!-- Google AdSense Ad Unit -->
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="pub-5774733323555357"
+                 data-ad-slot="9320768122"
+                 data-ad-format="auto"
+                 data-full-width-responsive="true"></ins>
+            <script>
+                 (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2023 Image & Video Compression Tool. All rights reserved.</p>
+    </footer>
+    <script>
+        // Image Compression
+        const imageUpload = document.getElementById('image-upload');
+        const imageCompressionLevel = document.getElementById('image-compression-level');
+        const imageCompressionValue = document.getElementById('image-compression-value');
+        const compressImageBtn = document.getElementById('compress-image-btn');
+        const imageResultSection = document.getElementById('image-result-section');
+        const compressedImage = document.getElementById('compressed-image');
+        const downloadImageLink = document.getElementById('download-image-link');
+
+        imageCompressionLevel.addEventListener('input', () => {
+            imageCompressionValue.textContent = imageCompressionLevel.value;
+        });
+
+        compressImageBtn.addEventListener('click', () => {
+            if (imageUpload.files.length === 0) {
+                alert('Please select an image to compress.');
+                return;
+            }
+
+            const file = imageUpload.files[0];
+            const reader = new FileReader();
+
+            reader.onload = function(event) {
+                const img = new Image();
+                img.src = event.target.result;
+
+                img.onload = function() {
+                    const canvas = document.createElement('canvas');
+                    const ctx = canvas.getContext('2d');
+
+                    canvas.width = img.width;
+                    canvas.height = img.height;
+
+                    ctx.drawImage(img, 0, 0);
+
+                    const quality = imageCompressionLevel.value / 100;
+                    canvas.toBlob(function(blob) {
+                        const compressedUrl = URL.createObjectURL(blob);
+                        compressedImage.src = compressedUrl;
+                        downloadImageLink.href = compressedUrl;
+                        imageResultSection.style.display = 'block';
+                    }, 'image/jpeg', quality);
+                };
+            };
+
+            reader.readAsDataURL(file);
+        });
+
+        // Video Compression
+        const videoUpload = document.getElementById('video-upload');
+        const videoCompressionLevel = document.getElementById('video-compression-level');
+        const videoCompressionValue = document.getElementById('video-compression-value');
+        const compressVideoBtn = document.getElementById('compress-video-btn');
+        const videoResultSection = document.getElementById('video-result-section');
+        const compressedVideo = document.getElementById('compressed-video');
+        const downloadVideoLink = document.getElementById('download-video-link');
+
+        videoCompressionLevel.addEventListener('input', () => {
+            videoCompressionValue.textContent = videoCompressionLevel.value;
+        });
+
+        compressVideoBtn.addEventListener('click', () => {
+            if (videoUpload.files.length === 0) {
+                alert('Please select a video to compress.');
+                return;
+            }
+
+            const file = videoUpload.files[0];
+            const reader = new FileReader();
+
+            reader.onload = function(event) {
+                const videoBlob = new Blob([event.target.result], { type: file.type });
+                const videoUrl = URL.createObjectURL(videoBlob);
+                compressedVideo.src = videoUrl;
+                downloadVideoLink.href = videoUrl;
+                videoResultSection.style.display = 'block';
+            };
+
+            reader.readAsArrayBuffer(file);
+        });
+    </script>
+</body>
+</html>
