@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Compress your images and videos online with our fully responsive compression tool. Optimize files for web use with adjustable compression levels.">
+    <meta name="keywords" content="image compression, video compression, optimize files, compress images, compress videos">
+    <meta name="author" content="Your Name">
+    <title>Home - Image & Video Compression Tool</title>
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* General Styles */
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background: linear-gradient(135deg, #f9f9f9, #e6f3ff);
+            color: #333;
+        }
+
+        header {
+            background: linear-gradient(135deg, #007bff, #00a8ff);
+            color: #fff;
+            padding: 20px;
+            width: 100%;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        nav {
+            display: flex;
+            justify-content: center;
+            background: #fff;
+            padding: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        nav a {
+            margin: 0 15px;
+            text-decoration: none;
+            color: #007bff;
+            font-weight: bold;
+            transition: color 0.3s ease;
+        }
+
+        nav a:hover {
+            color: #005bb5;
+        }
+
+        main {
+            width: 90%;
+            max-width: 1200px;
+            margin: 20px auto;
+            text-align: center;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: #fff;
+            padding: 50px 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+            color: #007bff;
+            margin-bottom: 20px;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: #555;
+            margin-bottom: 30px;
+        }
+
+        .hero .cta-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .hero .cta-buttons a {
+            padding: 15px 30px;
+            background: #007bff;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 6px;
+            font-size: 1rem;
+            transition: background 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .hero .cta-buttons a:hover {
+            background: #005bb5;
+        }
+
+        /* Features Section */
+        .features {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .feature-card {
+            background: #fff;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            width: 30%;
+            min-width: 250px;
+            transition: transform 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .feature-card i {
+            font-size: 2rem;
+            color: #007bff;
+            margin-bottom: 15px;
+        }
+
+        .feature-card h2 {
+            font-size: 1.5rem;
+            color: #007bff;
+            margin-bottom: 10px;
+        }
+
+        .feature-card p {
+            font-size: 1rem;
+            color: #555;
+        }
+
+        /* Footer */
+        footer {
+            background: linear-gradient(135deg, #007bff, #00a8ff);
+            color: #fff;
+            text-align: center;
+            padding: 15px;
+            width: 100%;
+            box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .features {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .feature-card {
+                width: 80%;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+
+            .hero .cta-buttons {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .hero .cta-buttons a {
+                width: 100%;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Image & Video Compression Tool</h1>
+    </header>
+    <nav>
+        <a href="#home">Home</a>
+        <a href="#image-compression">Image Compression</a>
+        <a href="#video-compression">Video Compression</a>
+    </nav>
+    <main>
+        <!-- Hero Section -->
+        <section class="hero" id="home">
+            <h1>Compress Images and Videos Easily</h1>
+            <p>Optimize your files for web use with our powerful and easy-to-use compression tools. Reduce file sizes without compromising quality.</p>
+            <div class="cta-buttons">
+                <a href="#image-compression">
+                    <i class="fas fa-image"></i>
+                    Compress Images
+                </a>
+                <a href="#video-compression">
+                    <i class="fas fa-video"></i>
+                    Compress Videos
+                </a>
+            </div>
+        </section>
+
+        <!-- Features Section -->
+        <section class="features">
+            <div class="feature-card">
+                <i class="fas fa-file-image"></i>
+                <h2>Image Compression</h2>
+                <p>Reduce the size of your images while maintaining high quality. Perfect for web use and faster loading times.</p>
+            </div>
+            <div class="feature-card">
+                <i class="fas fa-file-video"></i>
+                <h2>Video Compression</h2>
+                <p>Compress videos to save storage space and improve streaming performance without losing clarity.</p>
+            </div>
+            <div class="feature-card">
+                <i class="fas fa-user-friends"></i>
+                <h2>User-Friendly</h2>
+                <p>Our tools are designed to be simple and intuitive, making file compression easy for everyone.</p>
+            </div>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2023 Image & Video Compression Tool. All rights reserved.</p>
+    </footer>
+</body>
+</html>
