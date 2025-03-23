@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hashtags Generator</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #e8f5e9; /* Light green background */
+      color: #333;
+      text-align: center;
+      padding: 20px;
+    }
+    h1 {
+      color: #4CAF50; /* Green heading */
+    }
+    textarea, button {
+      margin: 10px;
+      padding: 10px;
+      font-size: 16px;
+    }
+    button {
+      background-color: #4CAF50; /* Green button */
+      color: white;
+      border: none;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+    button:hover {
+      background-color: #45a049; /* Darker green on hover */
+    }
+    #hashtagsOutput {
+      margin-top: 20px;
+      font-size: 16px;
+      color: #666;
+    }
+  </style>
+</head>
+<body>
+  <h1>Hashtags Generator</h1>
+  <textarea id="textInput" rows="4" cols="50" placeholder="Enter text to generate hashtags"></textarea>
+  <button id="generateBtn">Generate Hashtags</button>
+  <div id="hashtagsOutput"></div>
+
+  <script>
+    const textInput = document.getElementById('textInput');
+    const generateBtn = document.getElementById('generateBtn');
+    const hashtagsOutput = document.getElementById('hashtagsOutput');
+
+    generateBtn.addEventListener('click', function () {
+      const text = textInput.value;
+      if (text) {
+        const words = text.split(' ');
+        const hashtags = words.map(word => `#${word}`).join(' ');
+        hashtagsOutput.textContent = hashtags;
+      } else {
+        alert('Please enter some text.');
+      }
+    });
+  </script>
+</body>
+</html>
