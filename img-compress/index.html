@@ -25,6 +25,24 @@
       max-width: 100%;
       height: auto;
     }
+    .slider-container {
+      margin: 20px auto;
+      width: 80%;
+      max-width: 400px;
+    }
+    .slider-container label {
+      display: block;
+      margin-bottom: 10px;
+      font-size: 16px;
+    }
+    .slider {
+      width: 100%;
+    }
+    #outputSize {
+      margin-top: 10px;
+      font-size: 14px;
+      color: #666;
+    }
     button {
       background-color: #4CAF50; /* Green button */
       color: white;
@@ -33,6 +51,7 @@
       font-size: 16px;
       cursor: pointer;
       border-radius: 5px;
+      margin-top: 20px;
     }
     button:hover {
       background-color: #45a049; /* Darker green on hover */
@@ -42,29 +61,93 @@
 <body>
   <h1>Image Compression Tool</h1>
   <input type="file" id="imageInput" accept="image/*">
+  <div class="slider-container">
+    <label for="compressionSlider">Compression Level: <span id="compressionValue">50%</span></label>
+    <input type="range" id="compressionSlider" class="slider" min="10" max="90" value="50">
+    <div id="outputSize">Expected Output Size: -</div>
+  </div>
   <div id="preview"></div>
   <button id="downloadBtn" style="display: none;">Download Compressed Image</button>
 
   <script>
     const imageInput = document.getElementById('imageInput');
+    const compressionSlider = document.getElementById('compressionSlider');
+    const compressionValue = document.getElementById('compressionValue');
     const preview = document.getElementById('preview');
     const downloadBtn = document.getElementById('downloadBtn');
+    const outputSize = document.getElementById('outputSize');
 
+    let originalImageBlob = null;
+    let compressedImageBlob = null;
+
+    // Update compression level display
+    compressionSlider.addEventListener('input', function () {
+      compressionValue.textContent = `${compressionSlider.value}%`;
+      if (originalImageBlob) {
+        compressImage(originalImageBlob);
+      }
+    });
+
+    // Handle image upload
     imageInput.addEventListener('change', function (e) {
       const file = e.target.files[0];
       if (file) {
+        originalImageBlob = file;
         const reader = new FileReader();
         reader.onload = function (e) {
-          preview.innerHTML = `<img src="${e.target.result}" alt="Compressed Image">`;
-          downloadBtn.style.display = 'block';
-          downloadBtn.onclick = function () {
-            const link = document.createElement('a');
-            link.href = e.target.result;
-            link.download = 'compressed-image.jpg';
-            link.click();
-          };
+          preview.innerHTML = `<img src="${e.target.result}" alt="Image Preview">`;
+          compressImage(file);
         };
         reader.readAsDataURL(file);
+      }
+    });
+
+    // Compress the image
+    function compressImage(file) {
+      const img = new Image();
+      const url = URL.createObjectURL(file);
+      img.src = url;
+
+      img.onload = function () {
+        const canvas = document.createElement('canvas');
+        const ctx = canvas.getContext('2d');
+
+        // Set canvas dimensions
+        canvas.width = img.width;
+        canvas.height = img.height;
+
+        // Draw the image on the canvas
+        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+
+        // Compress the image
+        const quality = compressionSlider.value / 100;
+        canvas.toBlob(
+          function (blob) {
+            compressedImageBlob = blob;
+            const compressedImageUrl = URL.createObjectURL(blob);
+            preview.innerHTML = `<img src="${compressedImageUrl}" alt="Compressed Image">`;
+            downloadBtn.style.display = 'block';
+            updateOutputSize(blob);
+          },
+          'image/jpeg',
+          quality
+        );
+      };
+    }
+
+    // Update the expected output size
+    function updateOutputSize(blob) {
+      const sizeInKB = (blob.size / 1024).toFixed(2);
+      outputSize.textContent = `Expected Output Size: ${sizeInKB} KB`;
+    }
+
+    // Handle download button click
+    downloadBtn.addEventListener('click', function () {
+      if (compressedImageBlob) {
+        const link = document.createElement('a');
+        link.href = URL.createObjectURL(compressedImageBlob);
+        link.download = 'compressed-image.jpg';
+        link.click();
       }
     });
   </script>
