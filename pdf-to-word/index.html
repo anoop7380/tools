@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PDF to Word Converter</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #e3f2fd; /* Light blue background */
+      color: #333;
+      text-align: center;
+      padding: 20px;
+    }
+    h1 {
+      color: #2196F3; /* Blue heading */
+    }
+    input, button {
+      margin: 10px;
+      padding: 10px;
+      font-size: 16px;
+    }
+    button {
+      background-color: #2196F3; /* Blue button */
+      color: white;
+      border: none;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+    button:hover {
+      background-color: #1976D2; /* Darker blue on hover */
+    }
+  </style>
+</head>
+<body>
+  <h1>PDF to Word Converter</h1>
+  <input type="file" id="pdfInput" accept="application/pdf">
+  <button id="convertBtn">Convert to Word</button>
+
+  <script>
+    const pdfInput = document.getElementById('pdfInput');
+    const convertBtn = document.getElementById('convertBtn');
+
+    convertBtn.addEventListener('click', function () {
+      const file = pdfInput.files[0];
+      if (file) {
+        alert('PDF to Word conversion functionality will be implemented here.');
+      } else {
+        alert('Please upload a PDF file first.');
+      }
+    });
+  </script>
+</body>
+</html>
