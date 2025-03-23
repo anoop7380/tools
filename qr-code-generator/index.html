@@ -4,33 +4,46 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>QR Code Generator</title>
+  <!-- QR Code Library -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
   <style>
     body {
       font-family: Arial, sans-serif;
-      background-color: #fff3cd; /* Light yellow background */
+      background-color: #f4f4f9; /* Light gray background */
       color: #333;
       text-align: center;
       padding: 20px;
+      margin: 0;
     }
     h1 {
-      color: #ffc107; /* Yellow heading */
+      color: #4CAF50; /* Green heading */
     }
     input, button {
       margin: 10px;
       padding: 10px;
       font-size: 16px;
     }
+    input {
+      width: 80%;
+      max-width: 400px;
+    }
     button {
-      background-color: #ffc107; /* Yellow button */
+      background-color: #4CAF50; /* Green button */
       color: white;
       border: none;
       cursor: pointer;
       border-radius: 5px;
     }
     button:hover {
-      background-color: #e0a800; /* Darker yellow on hover */
+      background-color: #45a049; /* Darker green on hover */
     }
     #qrcode {
+      margin-top: 20px;
+      display: flex;
+      justify-content: center; /* Center the QR code horizontally */
+    }
+    #downloadBtn {
+      display: none;
       margin-top: 20px;
     }
   </style>
@@ -40,24 +53,46 @@
   <input type="text" id="textInput" placeholder="Enter text or URL">
   <button id="generateBtn">Generate QR Code</button>
   <div id="qrcode"></div>
+  <button id="downloadBtn">Download QR Code</button>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
   <script>
     const textInput = document.getElementById('textInput');
     const generateBtn = document.getElementById('generateBtn');
     const qrcodeDiv = document.getElementById('qrcode');
+    const downloadBtn = document.getElementById('downloadBtn');
 
+    let qrcode = null;
+
+    // Handle generate button click
     generateBtn.addEventListener('click', function () {
-      const text = textInput.value;
+      const text = textInput.value.trim();
       if (text) {
+        // Clear previous QR code
         qrcodeDiv.innerHTML = '';
-        new QRCode(qrcodeDiv, {
+
+        // Generate new QR code
+        qrcode = new QRCode(qrcodeDiv, {
           text: text,
           width: 200,
           height: 200,
         });
+
+        // Show download button
+        downloadBtn.style.display = 'inline-block';
       } else {
         alert('Please enter text or a URL.');
+      }
+    });
+
+    // Handle download button click
+    downloadBtn.addEventListener('click', function () {
+      if (qrcode) {
+        const canvas = qrcode._el.querySelector('canvas');
+        const url = canvas.toDataURL('image/png');
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = 'qrcode.png';
+        link.click();
       }
     });
   </script>
