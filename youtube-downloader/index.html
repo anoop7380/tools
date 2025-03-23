@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>YouTube Video Downloader</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #ffebee; /* Light red background */
+      color: #333;
+      text-align: center;
+      padding: 20px;
+    }
+    h1 {
+      color: #ff5252; /* Red heading */
+    }
+    input, button {
+      margin: 10px;
+      padding: 10px;
+      font-size: 16px;
+    }
+    button {
+      background-color: #ff5252; /* Red button */
+      color: white;
+      border: none;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+    button:hover {
+      background-color: #ff1744; /* Darker red on hover */
+    }
+  </style>
+</head>
+<body>
+  <h1>YouTube Video Downloader</h1>
+  <input type="text" id="videoUrl" placeholder="Enter YouTube Video URL">
+  <button id="downloadBtn">Download Video</button>
+
+  <script>
+    const videoUrl = document.getElementById('videoUrl');
+    const downloadBtn = document.getElementById('downloadBtn');
+
+    downloadBtn.addEventListener('click', function () {
+      const url = videoUrl.value;
+      if (url) {
+        alert('YouTube video download functionality will be implemented here.');
+      } else {
+        alert('Please enter a YouTube video URL.');
+      }
+    });
+  </script>
+</body>
+</html>
