@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Universal Video Downloader</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f9; /* Light gray background */
+      color: #333;
+      text-align: center;
+      padding: 20px;
+    }
+    h1 {
+      color: #4CAF50; /* Green heading */
+    }
+    p {
+      font-size: 16px;
+      color: #666;
+      margin: 20px auto;
+      max-width: 600px;
+    }
+    input, button {
+      margin: 10px;
+      padding: 10px;
+      font-size: 16px;
+    }
+    input {
+      width: 80%;
+      max-width: 400px;
+    }
+    button {
+      background-color: #4CAF50; /* Green button */
+      color: white;
+      border: none;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+    button:hover {
+      background-color: #45a049; /* Darker green on hover */
+    }
+    #downloadBtn {
+      display: none; /* Hidden by default */
+    }
+    #message {
+      margin-top: 20px;
+      font-size: 16px;
+      color: #666;
+    }
+  </style>
+</head>
+<body>
+  <h1>Universal Video Downloader</h1>
+  <p>
+    Download videos from popular platforms like <strong>YouTube</strong>, <strong>X/Twitter</strong>, <strong>Facebook</strong>, and <strong>Instagram</strong>.
+    Simply paste the video URL below, and click <strong>Download</strong> to save the video to your device.
+  </p>
+  <input type="text" id="videoUrl" placeholder="Enter video URL (e.g., YouTube, X/Twitter, Facebook, Instagram)">
+  <button id="checkBtn">Check URL</button>
+  <button id="downloadBtn">Download Video</button>
+  <div id="message"></div>
+
+  <script>
+    const videoUrl = document.getElementById('videoUrl');
+    const checkBtn = document.getElementById('checkBtn');
+    const downloadBtn = document.getElementById('downloadBtn');
+    const messageDiv = document.getElementById('message');
+
+    // Function to detect platform from URL
+    function detectPlatform(url) {
+      if (url.includes('youtube.com') || url.includes('youtu.be')) {
+        return 'YouTube';
+      } else if (url.includes('twitter.com') || url.includes('x.com')) {
+        return 'Twitter';
+      } else if (url.includes('facebook.com')) {
+        return 'Facebook';
+      } else if (url.includes('instagram.com')) {
+        return 'Instagram';
+      } else {
+        return null;
+      }
+    }
+
+    // Function to handle download
+    function handleDownload(url, platform) {
+      switch (platform) {
+        case 'YouTube':
+          messageDiv.textContent = 'Downloading YouTube video...';
+          // Add YouTube download logic here
+          break;
+        case 'Twitter':
+          messageDiv.textContent = 'Downloading Twitter video...';
+          // Add Twitter download logic here
+          break;
+        case 'Facebook':
+          messageDiv.textContent = 'Downloading Facebook video...';
+          // Add Facebook download logic here
+          break;
+        case 'Instagram':
+          messageDiv.textContent = 'Downloading Instagram video...';
+          // Add Instagram download logic here
+          break;
+        default:
+          messageDiv.textContent = 'Unsupported platform.';
+      }
+    }
+
+    // Check URL button click
+    checkBtn.addEventListener('click', function () {
+      const url = videoUrl.value.trim();
+      if (url) {
+        const platform = detectPlatform(url);
+        if (platform) {
+          messageDiv.textContent = `Detected platform: ${platform}`;
+          downloadBtn.style.display = 'inline-block';
+          downloadBtn.onclick = function () {
+            handleDownload(url, platform);
+          };
+        } else {
+          messageDiv.textContent = 'Unsupported platform. Please enter a valid URL.';
+          downloadBtn.style.display = 'none';
+        }
+      } else {
+        messageDiv.textContent = 'Please enter a video URL.';
+        downloadBtn.style.display = 'none';
+      }
+    });
+  </script>
+</body>
+</html>
