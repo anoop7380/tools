@@ -33,6 +33,7 @@
       font-size: 16px;
       cursor: pointer;
       border-radius: 5px;
+      margin-top: 20px;
     }
     button:hover {
       background-color: #e0a800; /* Darker yellow on hover */
@@ -50,23 +51,53 @@
     const preview = document.getElementById('preview');
     const convertBtn = document.getElementById('convertBtn');
 
+    let imageUrl = null;
+
+    // Handle image upload
     imageInput.addEventListener('change', function (e) {
       const file = e.target.files[0];
       if (file) {
         const reader = new FileReader();
         reader.onload = function (e) {
-          preview.innerHTML = `<img src="${e.target.result}" alt="Image Preview">`;
+          imageUrl = e.target.result;
+          preview.innerHTML = `<img src="${imageUrl}" alt="Image Preview">`;
         };
         reader.readAsDataURL(file);
       }
     });
 
+    // Handle convert button click
     convertBtn.addEventListener('click', function () {
-      const image = preview.querySelector('img');
-      if (image) {
-        const pdf = new jsPDF();
-        pdf.addImage(image.src, 'JPEG', 10, 10, 180, 160);
-        pdf.save('converted.pdf');
+      if (imageUrl) {
+        const img = new Image();
+        img.src = imageUrl;
+
+        img.onload = function () {
+          const { jsPDF } = window.jspdf; // Access jsPDF from the global scope
+          const pdf = new jsPDF('p', 'mm', 'a4'); // Create a new PDF in A4 size
+
+          const width = img.width;
+          const height = img.height;
+          const aspectRatio = width / height;
+
+          // Set PDF dimensions based on image aspect ratio
+          const pdfWidth = pdf.internal.pageSize.getWidth() - 20; // Leave some margin
+          const pdfHeight = pdfWidth / aspectRatio;
+
+          // Calculate centering offsets
+          const offsetX = (pdf.internal.pageSize.getWidth() - pdfWidth) / 2;
+          const offsetY = (pdf.internal.pageSize.getHeight() - pdfHeight) / 2;
+
+          // Add image to PDF
+          pdf.addImage(img, 'JPEG', offsetX, offsetY, pdfWidth, pdfHeight);
+
+          // Download the PDF
+          pdf.save('converted.pdf');
+        };
+
+        img.onerror = function () {
+          alert('Failed to load the image. Please try again.');
+        };
       } else {
         alert('Please upload an image first.');
       }
