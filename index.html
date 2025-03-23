@@ -3,7 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ProTools - Your Ultimate Online Toolkit</title>
+  <title>ProTools - Your Ultimate Online Toolkit for Free Tools</title>
+  <meta name="description" content="ProTools offers free online tools like background remover, image compression, PDF to Word converter, QR code generator, and more. Simplify your tasks with our ultimate toolkit.">
+  <meta name="keywords" content="online tools, free tools, background remover, image compression, PDF to Word, QR code generator, video downloader, URL shortener">
+  <meta name="author" content="ProTools">
   <!-- Font Awesome for Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <style>
@@ -109,6 +112,94 @@
     footer a:hover {
       text-decoration: underline;
     }
+
+    .ad-container {
+      margin: 20px 0;
+      text-align: center;
+    }
+
+    .cta-section {
+      text-align: center;
+      margin: 40px 0;
+    }
+
+    .cta-button {
+      padding: 10px 20px;
+      background-color: #4CAF50;
+      color: white;
+      text-decoration: none;
+      border-radius: 5px;
+      transition: background-color 0.3s ease;
+    }
+
+    .cta-button:hover {
+      background-color: #45a049;
+    }
+
+    .search-bar {
+      text-align: center;
+      margin: 20px 0;
+    }
+
+    .search-bar input {
+      padding: 10px;
+      width: 300px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    .search-bar button {
+      padding: 10px 20px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .search-bar button:hover {
+      background-color: #45a049;
+    }
+
+    /* Compact Tool List Styles */
+    .compact-tools {
+      display: none; /* Hidden by default */
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: center;
+      margin-top: 20px;
+    }
+
+    .compact-tool {
+      display: flex;
+      align-items: center;
+      background-color: white;
+      border-radius: 5px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      padding: 10px;
+      width: 200px;
+      transition: transform 0.3s ease;
+    }
+
+    .compact-tool:hover {
+      transform: translateY(-5px);
+    }
+
+    .compact-tool i {
+      font-size: 24px;
+      color: #4CAF50;
+      margin-right: 10px;
+    }
+
+    .compact-tool a {
+      color: #333;
+      text-decoration: none;
+      font-size: 0.9rem;
+    }
+
+    .compact-tool a:hover {
+      text-decoration: underline;
+    }
   </style>
 </head>
 <body>
@@ -118,80 +209,162 @@
     <p>Your Ultimate Online Toolkit for All Your Needs</p>
   </header>
 
+  <!-- AdSense Leaderboard Ad (Above the Fold) -->
+  <div class="ad-container">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX" crossorigin="anonymous"></script>
+    <ins class="adsbygoogle"
+         style="display:block"
+         data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
+         data-ad-slot="1234567890"
+         data-ad-format="auto"
+         data-full-width-responsive="true"></ins>
+    <script>
+         (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+  </div>
+
   <!-- Main Content -->
   <div class="container">
+    <!-- Search Bar -->
+    <div class="search-bar">
+      <input type="text" placeholder="Search for tools..." aria-label="Search for tools">
+      <button><i class="fas fa-search"></i></button>
+    </div>
+
+    <!-- Tools Section -->
     <div class="tools">
-      <!-- Background Remover -->
+      <!-- Tool Cards -->
       <div class="tool-card">
-        <i class="fas fa-image"></i>
+        <i class="fas fa-image" aria-label="Background Remover Icon"></i>
         <h3>Background Remover</h3>
         <p>Remove the background from images easily.</p>
         <a href="bg-remover/index.html">Use Tool</a>
       </div>
-
-      <!-- Hashtags Generator -->
       <div class="tool-card">
-        <i class="fas fa-hashtag"></i>
+        <i class="fas fa-hashtag" aria-label="Hashtags Generator Icon"></i>
         <h3>Hashtags Generator</h3>
         <p>Generate hashtags for your social media posts.</p>
         <a href="hashtags-generator/index.html">Use Tool</a>
       </div>
-
-      <!-- Image Compression -->
       <div class="tool-card">
-        <i class="fas fa-file-image"></i>
+        <i class="fas fa-file-image" aria-label="Image Compression Icon"></i>
         <h3>Image Compression</h3>
         <p>Compress images without losing quality.</p>
         <a href="img-compress/index.html">Use Tool</a>
       </div>
 
-      <!-- Image to PDF -->
+      <!-- In-Content Ad -->
+      <div class="ad-container">
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX" crossorigin="anonymous"></script>
+        <ins class="adsbygoogle"
+             style="display:block"
+             data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
+             data-ad-slot="0987654321"
+             data-ad-format="auto"
+             data-full-width-responsive="true"></ins>
+        <script>
+             (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+      </div>
+
+      <!-- More Tool Cards -->
       <div class="tool-card">
-        <i class="fas fa-file-pdf"></i>
+        <i class="fas fa-file-pdf" aria-label="Image to PDF Icon"></i>
         <h3>Image to PDF</h3>
         <p>Convert images to PDF files easily.</p>
         <a href="img-to-pdf/index.html">Use Tool</a>
       </div>
-
-      <!-- Video Compression -->
       <div class="tool-card">
-        <i class="fas fa-file-video"></i>
+        <i class="fas fa-file-video" aria-label="Video Compression Icon"></i>
         <h3>Video Compression</h3>
         <p>Compress videos to save space.</p>
         <a href="img-vid-compress/index.html">Use Tool</a>
       </div>
-
-      <!-- PDF to Word -->
       <div class="tool-card">
-        <i class="fas fa-file-word"></i>
+        <i class="fas fa-file-word" aria-label="PDF to Word Icon"></i>
         <h3>PDF to Word</h3>
         <p>Convert PDF files to editable Word documents.</p>
         <a href="pdf-to-word/index.html">Use Tool</a>
       </div>
-
-      <!-- QR Code Generator -->
       <div class="tool-card">
-        <i class="fas fa-qrcode"></i>
+        <i class="fas fa-qrcode" aria-label="QR Code Generator Icon"></i>
         <h3>QR Code Generator</h3>
         <p>Generate QR codes for URLs, text, or contact info.</p>
         <a href="qr-code-generator/index.html">Use Tool</a>
       </div>
-
-      <!-- URL Shortener -->
       <div class="tool-card">
-        <i class="fas fa-link"></i>
+        <i class="fas fa-link" aria-label="URL Shortener Icon"></i>
         <h3>URL Shortener</h3>
         <p>Shorten long URLs quickly and easily.</p>
         <a href="url_shortner/index.html">Use Tool</a>
       </div>
-
-      <!-- Universal Video Downloader -->
       <div class="tool-card">
-        <i class="fas fa-download"></i>
+        <i class="fas fa-download" aria-label="Video Downloader Icon"></i>
         <h3>Video Downloader</h3>
         <p>Download videos from YouTube, Twitter, Facebook, and Instagram.</p>
         <a href="video-downloader/index.html">Use Tool</a>
       </div>
+    </div>
+
+    <!-- Compact Tools Section (Hidden by Default) -->
+    <div class="compact-tools" id="compactTools">
+      <div class="compact-tool">
+        <i class="fas fa-image"></i>
+        <a href="bg-remover/index.html">Background Remover</a>
+      </div>
+      <div class="compact-tool">
+        <i class="fas fa-hashtag"></i>
+        <a href="hashtags-generator/index.html">Hashtags Generator</a>
+      </div>
+      <div class="compact-tool">
+        <i class="fas fa-file-image"></i>
+        <a href="img-compress/index.html">Image Compression</a>
+      </div>
+      <div class="compact-tool">
+        <i class="fas fa-file-pdf"></i>
+        <a href="img-to-pdf/index.html">Image to PDF</a>
+      </div>
+      <div class="compact-tool">
+        <i class="fas fa-file-video"></i>
+        <a href="img-vid-compress/index.html">Video Compression</a>
+      </div>
+      <div class="compact-tool">
+        <i class="fas fa-file-word"></i>
+        <a href="pdf-to-word/index.html">PDF to Word</a>
+      </div>
+      <div class="compact-tool">
+        <i class="fas fa-qrcode"></i>
+        <a href="qr-code-generator/index.html">QR Code Generator</a>
+      </div>
+      <div class="compact-tool">
+        <i class="fas fa-link"></i>
+        <a href="url_shortner/index.html">URL Shortener</a>
+      </div>
+      <div class="compact-tool">
+        <i class="fas fa-download"></i>
+        <a href="video-downloader/index.html">Video Downloader</a>
+      </div>
+    </div>
+
+    <!-- CTA Section -->
+    <div class="cta-section">
+      <h2>Explore More Tools</h2>
+      <p>Discover all the tools we offer to make your life easier.</p>
+      <button id="viewAllTools" class="cta-button">View All Tools</button>
+    </div>
+
+    <!-- Footer Ad -->
+    <div class="ad-container">
+      <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX" crossorigin="anonymous"></script>
+      <ins class="adsbygoogle"
+           style="display:block"
+           data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
+           data-ad-slot="1122334455"
+           data-ad-format="auto"
+           data-full-width-responsive="true"></ins>
+      <script>
+           (adsbygoogle = window.adsbygoogle || []).push({});
+      </script>
     </div>
   </div>
 
@@ -199,5 +372,17 @@
   <footer>
     <p>&copy; 2023 ProTools. All rights reserved. | <a href="/privacy">Privacy Policy</a></p>
   </footer>
+
+  <!-- JavaScript to Toggle Compact Tools -->
+  <script>
+    document.getElementById('viewAllTools').addEventListener('click', function() {
+      const compactTools = document.getElementById('compactTools');
+      if (compactTools.style.display === 'none' || compactTools.style.display === '') {
+        compactTools.style.display = 'flex'; // Show compact tools
+      } else {
+        compactTools.style.display = 'none'; // Hide compact tools
+      }
+    });
+  </script>
 </body>
 </html>
