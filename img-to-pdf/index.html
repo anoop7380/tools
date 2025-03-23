@@ -1,116 +1,77 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Online Image to PDF Converter - Convert your images into PDF format easily.">
-    <meta name="keywords" content="image to pdf, convert image to pdf, online image pdf converter">
-    <meta name="author" content="Your Name">
-    <title>Image to PDF Converter</title>
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-    <style>
-        body {
-            font-family: 'Arial', sans-serif;
-            text-align: center;
-            padding: 20px;
-            background: linear-gradient(to right, #2193b0, #6dd5ed);
-            color: white;
-        }
-        .container {
-            max-width: 600px;
-            margin: auto;
-            background: rgba(255, 255, 255, 0.2);
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
-        }
-        .ad-space {
-            margin: 20px 0;
-            min-height: 100px;
-            background-color: rgba(255, 255, 255, 0.3);
-            text-align: center;
-            padding: 10px;
-            border-radius: 5px;
-        }
-        input, button {
-            margin: 10px 0;
-            padding: 10px;
-            width: 100%;
-            border: none;
-            border-radius: 5px;
-        }
-        button {
-            background-color: #007acc;
-            color: white;
-            cursor: pointer;
-            font-size: 16px;
-            transition: 0.3s;
-        }
-        button:hover {
-            background-color: #005f99;
-        }
-        img {
-            width: 100%;
-            margin-top: 20px;
-            border-radius: 5px;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Image to PDF Converter</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #fff3cd; /* Light yellow background */
+      color: #333;
+      text-align: center;
+      padding: 20px;
+    }
+    h1 {
+      color: #ffc107; /* Yellow heading */
+    }
+    #preview {
+      margin: 20px auto;
+      max-width: 100%;
+      border: 2px dashed #ffc107; /* Yellow border */
+      padding: 10px;
+    }
+    #preview img {
+      max-width: 100%;
+      height: auto;
+    }
+    button {
+      background-color: #ffc107; /* Yellow button */
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+    button:hover {
+      background-color: #e0a800; /* Darker yellow on hover */
+    }
+  </style>
 </head>
 <body>
-    <h1>Image to PDF Converter</h1>
-    <div class="container">
-        <input type="file" id="imageInput" accept="image/*" multiple>
-        
-        <button onclick="convertToPDF()">Convert to PDF</button>
-        
-        <div class="ad-space">
-            <ins class="adsbygoogle"
-                 style="display:block"
-                 data-ad-client="ca-pub-5774733323555357"
-                 data-ad-slot="9320768122"
-                 data-ad-format="auto"
-                 data-full-width-responsive="true"></ins>
-            <script>
-                 (adsbygoogle = window.adsbygoogle || []).push({});
-            </script>
-        </div>
-        
-        <img id="imagePreview" alt="Image Preview">
-    </div>
-    
-    <script>
-        function convertToPDF() {
-            const { jsPDF } = window.jspdf;
-            const input = document.getElementById('imageInput');
-            
-            if (input.files.length === 0) {
-                alert('Please select at least one image file.');
-                return;
-            }
-            
-            const pdf = new jsPDF();
-            let count = 0;
-            
-            Array.from(input.files).forEach((file, index) => {
-                const reader = new FileReader();
-                reader.onload = function(event) {
-                    const img = new Image();
-                    img.src = event.target.result;
-                    img.onload = function() {
-                        const width = pdf.internal.pageSize.getWidth();
-                        const height = (img.height * width) / img.width;
-                        if (index > 0) pdf.addPage();
-                        pdf.addImage(img, 'JPEG', 0, 0, width, height);
-                        count++;
-                        if (count === input.files.length) {
-                            pdf.save('converted.pdf');
-                        }
-                    };
-                };
-                reader.readAsDataURL(file);
-            });
-        }
-    </script>
+  <h1>Image to PDF Converter</h1>
+  <input type="file" id="imageInput" accept="image/*">
+  <div id="preview"></div>
+  <button id="convertBtn">Convert to PDF</button>
+
+  <script>
+    const imageInput = document.getElementById('imageInput');
+    const preview = document.getElementById('preview');
+    const convertBtn = document.getElementById('convertBtn');
+
+    imageInput.addEventListener('change', function (e) {
+      const file = e.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function (e) {
+          preview.innerHTML = `<img src="${e.target.result}" alt="Image Preview">`;
+        };
+        reader.readAsDataURL(file);
+      }
+    });
+
+    convertBtn.addEventListener('click', function () {
+      const image = preview.querySelector('img');
+      if (image) {
+        const pdf = new jsPDF();
+        pdf.addImage(image.src, 'JPEG', 10, 10, 180, 160);
+        pdf.save('converted.pdf');
+      } else {
+        alert('Please upload an image first.');
+      }
+    });
+  </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 </body>
 </html>
