@@ -49,76 +49,33 @@
     const convertBtn = document.getElementById('convertBtn');
     const loadingDiv = document.getElementById('loading');
 
-    // CloudConvert API Key (replace with your actual API key)
-    const API_KEY = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiYjk2OTBiOWI4NmJkMDk1OTEzNjBkMmE4OWMwZmNjNTc1YWIyMTE1Y2E1NmEwMjM2ZDQ1MTRhZTg2YWQwNDE3NjI4ODM1MmFmNTI2Y2QwODgiLCJpYXQiOjE3NDI3MjY4NTMuOTU4MzAzLCJuYmYiOjE3NDI3MjY4NTMuOTU4MzA0LCJleHAiOjQ4OTg0MDA0NTMuOTU0MTcxLCJzdWIiOiI3MTQxOTYzMSIsInNjb3BlcyI6W119.QKKjjHdE-lhiTf4cNr-deqHgnZsfqW3yEwU08n0IQM6ICoixFrY82i5RuY2dxXMZxj2y5iLquxMWZ_fQDeYAmsiZYTQktx3fhGsXIuLwRAGc58iLmVYTDdxUSkxkS48uVP4wnur9fi0q95o4XBVe5EbmzTdMqM1UNoWmG68FUtfdzmQfRqB6WzDbLtpBLHWcplUgrn_-hF1-ZGGbzp4Sb3UTl6UnW9PTj1GNoruL9OrI_6VSv90GILqa8SfOrD_piGNXa6T0tRHz2h8_-IrOUBccRctrwMrYY04kbgKkLHY9CnYTQZV7wVR1KggQAxm0-lm91nV1jWicka1mILgrNrGE-3EGM8IoUDFvJ_rA45GSMZ3oCGm67xOaykEZuUUkSWjx8dtbEfRzLCq7FKiTrNoh_eq2UFecapQqdOuYO61aOXp0yqMfTpJxDDFw0F9-qbq3m4rkyioIYJdPXtXmwblI50ehfIA6S700iUDU9wu4sOeWlcZSWcl1ptiasmK_GLxk6Zofwvb2mLFAhC_612gDvzo9rVjLSaRCOyjFpKL2wiOPUsP3dZz6fBFF1cC-IKgoD9g-NBOgiAYxBSLvKJeG8kpXxNx3Ux2XdXRuqknlXm6ayRcnpmy9Ksogdto4bshOO7b62d73NkuDUMChng9hfXvdz8DZL_Vdv4hDfZo';
-
     // Handle convert button click
     convertBtn.addEventListener('click', async function () {
       const file = pdfInput.files[0];
       if (file) {
         loadingDiv.style.display = 'block';
         try {
-          // Step 1: Create a conversion job
-          const jobResponse = await fetch('https://api.cloudconvert.com/v2/jobs', {
+          // Convert PDF to Word using PDFTron API
+          const formData = new FormData();
+          formData.append('file', file);
+
+          const response = await fetch('https://api.pdftron.com/v2/convert', {
             method: 'POST',
-            headers: {
-              'Authorization': `Bearer ${API_KEY}`,
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-              tasks: {
-                'import-file': {
-                  operation: 'import/upload',
-                },
-                'convert-file': {
-                  operation: 'convert',
-                  input: ['import-file'],
-                  output_format: 'docx',
-                },
-                'export-file': {
-                  operation: 'export/url',
-                  input: ['convert-file'],
-                },
-              },
-            }),
+            body: formData,
           });
 
-          const jobData = await jobResponse.json();
-          const jobId = jobData.data.id;
-
-          // Step 2: Upload the PDF file
-          const uploadUrl = jobData.data.tasks.find(task => task.name === 'import-file').result.url;
-          await fetch(uploadUrl, {
-            method: 'PUT',
-            body: file,
-          });
-
-          // Step 3: Wait for the conversion to complete
-          let exportUrl;
-          while (true) {
-            const statusResponse = await fetch(`https://api.cloudconvert.com/v2/jobs/${jobId}`, {
-              headers: {
-                'Authorization': `Bearer ${API_KEY}`,
-              },
-            });
-            const statusData = await statusResponse.json();
-            if (statusData.data.status === 'finished') {
-              exportUrl = statusData.data.tasks.find(task => task.name === 'export-file').result.files[0].url;
-              break;
-            }
-            await new Promise(resolve => setTimeout(resolve, 1000)); // Wait 1 second before checking again
+          if (response.ok) {
+            const blob = await response.blob();
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = 'converted.docx';
+            link.click();
+          } else {
+            alert('Failed to convert PDF to Word. Please try again.');
           }
-
-          // Step 4: Download the converted Word file
-          const downloadResponse = await fetch(exportUrl);
-          const blob = await downloadResponse.blob();
-          const url = URL.createObjectURL(blob);
-          const link = document.createElement('a');
-          link.href = url;
-          link.download = 'converted.docx';
-          link.click();
         } catch (error) {
-          alert('Failed to convert PDF to Word. Please try again.');
+          alert('An error occurred. Please try again.');
         } finally {
           loadingDiv.style.display = 'none';
         }
