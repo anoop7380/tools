@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Image Background Remover</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f9; /* Light gray background */
+      color: #333;
+      text-align: center;
+      padding: 20px;
+    }
+    h1 {
+      color: #4CAF50; /* Green heading */
+    }
+    .container {
+      display: flex;
+      justify-content: space-around;
+      margin: 20px auto;
+      max-width: 1200px;
+    }
+    .image-section {
+      width: 45%;
+      border: 2px dashed #4CAF50; /* Green border */
+      padding: 10px;
+    }
+    .image-section img {
+      max-width: 100%;
+      height: auto;
+    }
+    button {
+      background-color: #4CAF50; /* Green button */
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+      border-radius: 5px;
+      margin-top: 20px;
+    }
+    button:hover {
+      background-color: #45a049; /* Darker green on hover */
+    }
+    #loading {
+      display: none;
+      font-size: 16px;
+      color: #666;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Image Background Remover</h1>
+  <input type="file" id="imageInput" accept="image/*">
+  <div class="container">
+    <div class="image-section">
+      <h2>Original Image</h2>
+      <img id="originalImage" src="#" alt="Original Image" style="display: none;">
+    </div>
+    <div class="image-section">
+      <h2>Background Removed</h2>
+      <img id="removedBgImage" src="#" alt="Background Removed" style="display: none;">
+    </div>
+  </div>
+  <div id="loading">Processing... Please wait.</div>
+  <button id="downloadBtn" style="display: none;">Download Result</button>
+
+  <script>
+    const imageInput = document.getElementById('imageInput');
+    const originalImage = document.getElementById('originalImage');
+    const removedBgImage = document.getElementById('removedBgImage');
+    const downloadBtn = document.getElementById('downloadBtn');
+    const loadingDiv = document.getElementById('loading');
+
+    // Handle image upload
+    imageInput.addEventListener('change', function (e) {
+      const file = e.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function (e) {
+          originalImage.src = e.target.result;
+          originalImage.style.display = 'block';
+          loadingDiv.style.display = 'block';
+          removeBackground(file);
+        };
+        reader.readAsDataURL(file);
+      }
+    });
+
+    // Function to remove background using backend
+    async function removeBackground(file) {
+      const formData = new FormData();
+      formData.append('image_file', file);
+
+      try {
+        const response = await fetch('http://localhost:3000/remove-background', {
+          method: 'POST',
+          body: formData,
+        });
+
+        if (response.ok) {
+          const blob = await response.blob();
+          const url = URL.createObjectURL(blob);
+          removedBgImage.src = url;
+          removedBgImage.style.display = 'block';
+          downloadBtn.style.display = 'block';
+          downloadBtn.onclick = function () {
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = 'background-removed.png';
+            link.click();
+          };
+        } else {
+          alert('Failed to remove background. Please try again.');
+        }
+      } catch (error) {
+        alert('An error occurred. Please try again.');
+      } finally {
+        loadingDiv.style.display = 'none';
+      }
+    }
+  </script>
+</body>
+</html>
