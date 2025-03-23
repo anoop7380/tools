@@ -15,20 +15,10 @@
     h1 {
       color: #4CAF50; /* Green heading */
     }
-    p {
-      font-size: 16px;
-      color: #666;
-      margin: 20px auto;
-      max-width: 600px;
-    }
     input, button {
       margin: 10px;
       padding: 10px;
       font-size: 16px;
-    }
-    input {
-      width: 80%;
-      max-width: 400px;
     }
     button {
       background-color: #4CAF50; /* Green button */
@@ -40,90 +30,52 @@
     button:hover {
       background-color: #45a049; /* Darker green on hover */
     }
-    #downloadBtn {
-      display: none; /* Hidden by default */
-    }
-    #message {
-      margin-top: 20px;
+    #loading {
+      display: none;
       font-size: 16px;
       color: #666;
+      margin-top: 20px;
     }
   </style>
 </head>
 <body>
   <h1>Universal Video Downloader</h1>
-  <p>
-    Download videos from popular platforms like <strong>YouTube</strong>, <strong>X/Twitter</strong>, <strong>Facebook</strong>, and <strong>Instagram</strong>.
-    Simply paste the video URL below, and click <strong>Download</strong> to save the video to your device.
-  </p>
-  <input type="text" id="videoUrl" placeholder="Enter video URL (e.g., YouTube, X/Twitter, Facebook, Instagram)">
-  <button id="checkBtn">Check URL</button>
+  <input type="text" id="videoUrl" placeholder="Enter video URL (e.g., YouTube, Twitter, Facebook, Instagram)">
   <button id="downloadBtn">Download Video</button>
-  <div id="message"></div>
+  <div id="loading">Processing... Please wait.</div>
 
   <script>
     const videoUrl = document.getElementById('videoUrl');
-    const checkBtn = document.getElementById('checkBtn');
     const downloadBtn = document.getElementById('downloadBtn');
-    const messageDiv = document.getElementById('message');
+    const loadingDiv = document.getElementById('loading');
 
-    // Function to detect platform from URL
-    function detectPlatform(url) {
-      if (url.includes('youtube.com') || url.includes('youtu.be')) {
-        return 'YouTube';
-      } else if (url.includes('twitter.com') || url.includes('x.com')) {
-        return 'Twitter';
-      } else if (url.includes('facebook.com')) {
-        return 'Facebook';
-      } else if (url.includes('instagram.com')) {
-        return 'Instagram';
-      } else {
-        return null;
-      }
-    }
-
-    // Function to handle download
-    function handleDownload(url, platform) {
-      switch (platform) {
-        case 'YouTube':
-          messageDiv.textContent = 'Downloading YouTube video...';
-          // Add YouTube download logic here
-          break;
-        case 'Twitter':
-          messageDiv.textContent = 'Downloading Twitter video...';
-          // Add Twitter download logic here
-          break;
-        case 'Facebook':
-          messageDiv.textContent = 'Downloading Facebook video...';
-          // Add Facebook download logic here
-          break;
-        case 'Instagram':
-          messageDiv.textContent = 'Downloading Instagram video...';
-          // Add Instagram download logic here
-          break;
-        default:
-          messageDiv.textContent = 'Unsupported platform.';
-      }
-    }
-
-    // Check URL button click
-    checkBtn.addEventListener('click', function () {
+    // Handle download button click
+    downloadBtn.addEventListener('click', async function () {
       const url = videoUrl.value.trim();
       if (url) {
-        const platform = detectPlatform(url);
-        if (platform) {
-          messageDiv.textContent = `Detected platform: ${platform}`;
-          downloadBtn.style.display = 'inline-block';
-          downloadBtn.onclick = function () {
-            handleDownload(url, platform);
-          };
-        } else {
-          messageDiv.textContent = 'Unsupported platform. Please enter a valid URL.';
-          downloadBtn.style.display = 'none';
+        loadingDiv.style.display = 'block';
+        try {
+          // Use SaveFrom.net API to get download links
+          const apiUrl = `https://api.savefrom.net/service/parse?url=${encodeURIComponent(url)}`;
+          const response = await fetch(apiUrl);
+          const data = await response.json();
+
+          if (data.status === 'OK' && data.data.length > 0) {
+            // Get the first available download link
+            const downloadLink = data.data[0].url;
+
+            // Redirect to the download link
+            window.location.href = downloadLink;
+          } else {
+            alert('Failed to fetch download link. Please try again.');
+          }
+        } catch (error) {
+          alert('An error occurred. Please try again.');
+        } finally {
+          loadingDiv.style.display = 'none';
         }
       } else {
-        messageDiv.textContent = 'Please enter a video URL.';
-        downloadBtn.style.display = 'none';
+        alert('Please enter a video URL.');
       }
     });
   </script>
