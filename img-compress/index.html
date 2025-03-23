@@ -1,120 +1,72 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Online Image Compression Tool - Compress your images easily and optimize file sizes.">
-    <meta name="keywords" content="image compressor, online image compression, reduce image size">
-    <meta name="author" content="Your Name">
-    <title>Online Image Compressor</title>
-    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-    <style>
-        body {
-            font-family: 'Arial', sans-serif;
-            text-align: center;
-            padding: 20px;
-            background: linear-gradient(to right, #2193b0, #6dd5ed);
-            color: white;
-        }
-        .container {
-            max-width: 600px;
-            margin: auto;
-            background: rgba(255, 255, 255, 0.2);
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
-        }
-        .ad-space {
-            margin: 20px 0;
-            min-height: 100px;
-            background-color: rgba(255, 255, 255, 0.3);
-            text-align: center;
-            padding: 10px;
-            border-radius: 5px;
-        }
-        input, button {
-            margin: 10px 0;
-            padding: 10px;
-            width: 100%;
-            border: none;
-            border-radius: 5px;
-        }
-        button {
-            background-color: #007acc;
-            color: white;
-            cursor: pointer;
-            font-size: 16px;
-            transition: 0.3s;
-        }
-        button:hover {
-            background-color: #005f99;
-        }
-        img {
-            width: 100%;
-            margin-top: 20px;
-            border-radius: 5px;
-        }
-        .slider-container {
-            text-align: center;
-            margin: 20px 0;
-        }
-        .slider {
-            width: 100%;
-            accent-color: #007acc;
-        }
-        label {
-            font-size: 18px;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Image Compression Tool</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #e8f5e9; /* Light green background */
+      color: #333;
+      text-align: center;
+      padding: 20px;
+    }
+    h1 {
+      color: #4CAF50; /* Green heading */
+    }
+    #preview {
+      margin: 20px auto;
+      max-width: 100%;
+      border: 2px dashed #4CAF50; /* Green border */
+      padding: 10px;
+    }
+    #preview img {
+      max-width: 100%;
+      height: auto;
+    }
+    button {
+      background-color: #4CAF50; /* Green button */
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+    button:hover {
+      background-color: #45a049; /* Darker green on hover */
+    }
+  </style>
 </head>
 <body>
-    <h1>Online Image Compressor</h1>
-    <div class="container">
-        <input type="file" id="imageInput" accept="image/*">
-        
-        <div class="slider-container">
-            <label for="compressionSlider">Compression Level:</label>
-            <input type="range" id="compressionSlider" class="slider" min="1" max="10" value="5" oninput="updateCompressionLabel()">
-            <p>Selected Compression: <span id="compressionLabel">5</span></p>
-        </div>
-        
-        <button onclick="compressImage()">Compress Image</button>
-        
-        <div class="ad-space">
-            <ins class="adsbygoogle"
-                 style="display:block"
-                 data-ad-client="ca-pub-5774733323555357"
-                 data-ad-slot="9320768122"
-                 data-ad-format="auto"
-                 data-full-width-responsive="true"></ins>
-            <script>
-                 (adsbygoogle = window.adsbygoogle || []).push({});
-            </script>
-        </div>
-        
-        <img id="imagePreview" alt="Compressed Image Preview">
-    </div>
-    
-    <script>
-        function updateCompressionLabel() {
-            document.getElementById('compressionLabel').innerText = document.getElementById('compressionSlider').value;
-        }
+  <h1>Image Compression Tool</h1>
+  <input type="file" id="imageInput" accept="image/*">
+  <div id="preview"></div>
+  <button id="downloadBtn" style="display: none;">Download Compressed Image</button>
 
-        function compressImage() {
-            const input = document.getElementById('imageInput');
-            const compressionLevel = document.getElementById('compressionSlider').value;
-            const imagePreview = document.getElementById('imagePreview');
-            
-            if (input.files.length === 0) {
-                alert('Please select an image file.');
-                return;
-            }
-            
-            const file = input.files[0];
-            const url = URL.createObjectURL(file);
-            imagePreview.src = url;
-            alert(`Image compression level set to: ${compressionLevel}. This feature requires backend processing.`);
-        }
-    </script>
+  <script>
+    const imageInput = document.getElementById('imageInput');
+    const preview = document.getElementById('preview');
+    const downloadBtn = document.getElementById('downloadBtn');
+
+    imageInput.addEventListener('change', function (e) {
+      const file = e.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function (e) {
+          preview.innerHTML = `<img src="${e.target.result}" alt="Compressed Image">`;
+          downloadBtn.style.display = 'block';
+          downloadBtn.onclick = function () {
+            const link = document.createElement('a');
+            link.href = e.target.result;
+            link.download = 'compressed-image.jpg';
+            link.click();
+          };
+        };
+        reader.readAsDataURL(file);
+      }
+    });
+  </script>
 </body>
 </html>
