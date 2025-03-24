@@ -1,191 +1,191 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5774733323555357"
-     crossorigin="anonymous"></script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Universal Video Downloader - ProTools</title>
   <style>
     body {
-      font-family: Arial, sans-serif;
-      background-color: #f4f4f9;
-      color: #333;
-      text-align: center;
-      padding: 20px;
+      font-family: 'Arial', sans-serif;
       max-width: 800px;
       margin: 0 auto;
+      padding: 20px;
+      background-color: #f5f5f5;
+    }
+    .container {
+      background: white;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
     }
     h1 {
       color: #4CAF50;
+      text-align: center;
     }
-    .input-container {
+    .input-group {
       margin: 20px 0;
     }
     input {
+      width: 100%;
       padding: 12px;
-      width: 80%;
-      max-width: 500px;
       border: 1px solid #ddd;
-      border-radius: 5px;
+      border-radius: 4px;
       font-size: 16px;
+      box-sizing: border-box;
     }
     button {
-      padding: 12px 24px;
-      background-color: #4CAF50;
-      color: white;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-      font-size: 16px;
-      transition: background-color 0.3s;
-    }
-    button:hover {
-      background-color: #45a049;
-    }
-    button:disabled {
-      background-color: #cccccc;
-      cursor: not-allowed;
-    }
-    #status {
-      margin: 20px 0;
-      min-height: 24px;
-    }
-    .error {
-      color: #ff4444;
-    }
-    .success {
-      color: #4CAF50;
-    }
-    .platform-tabs {
-      display: flex;
-      justify-content: center;
-      margin: 20px 0;
-    }
-    .platform-tab {
-      padding: 10px 20px;
-      margin: 0 5px;
-      background: #e0e0e0;
-      border-radius: 5px;
-      cursor: pointer;
-    }
-    .platform-tab.active {
       background: #4CAF50;
       color: white;
+      border: none;
+      padding: 12px 20px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 16px;
+      width: 100%;
+      transition: background 0.3s;
     }
-    .instructions {
-      margin: 30px 0;
-      text-align: left;
+    button:hover {
+      background: #45a049;
+    }
+    button:disabled {
+      background: #cccccc;
+      cursor: not-allowed;
+    }
+    #result {
+      margin-top: 20px;
       padding: 15px;
-      background: #f8f8f8;
-      border-radius: 5px;
+      border-radius: 4px;
+      display: none;
+    }
+    .error {
+      background: #ffebee;
+      color: #f44336;
+      border-left: 4px solid #f44336;
+    }
+    .success {
+      background: #e8f5e9;
+      color: #4CAF50;
+      border-left: 4px solid #4CAF50;
+    }
+    .loading {
+      display: inline-block;
+      width: 20px;
+      height: 20px;
+      border: 3px solid rgba(0,0,0,.3);
+      border-radius: 50%;
+      border-top-color: #4CAF50;
+      animation: spin 1s ease-in-out infinite;
+      margin-right: 10px;
+    }
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+    .download-options {
+      margin-top: 20px;
+    }
+    .download-btn {
+      display: block;
+      background: #2196F3;
+      color: white;
+      padding: 10px 15px;
+      text-decoration: none;
+      border-radius: 4px;
+      margin: 10px 0;
+      text-align: center;
+    }
+    .download-btn:hover {
+      background: #0b7dda;
     }
   </style>
 </head>
 <body>
-  <h1>Universal Video Downloader</h1>
-  <p>Download videos from YouTube, Twitter, Facebook, and Instagram</p>
-  
-  <div class="platform-tabs">
-    <div class="platform-tab active" data-platform="all">All Platforms</div>
-    <div class="platform-tab" data-platform="youtube">YouTube</div>
-    <div class="platform-tab" data-platform="twitter">Twitter</div>
-    <div class="platform-tab" data-platform="facebook">Facebook</div>
-    <div class="platform-tab" data-platform="instagram">Instagram</div>
-  </div>
-
-  <div class="input-container">
-    <input type="text" id="videoUrl" placeholder="Paste video URL here...">
-    <button id="downloadBtn">Download Video</button>
-  </div>
-
-  <div id="status"></div>
-
-  <div class="instructions">
-    <h3>How to use:</h3>
-    <ol>
-      <li>Copy the URL of the video you want to download</li>
-      <li>Paste it in the box above</li>
-      <li>Click "Download Video"</li>
-      <li>Wait for processing to complete</li>
-    </ol>
-    <p><strong>Note:</strong> This tool uses third-party services to process downloads.</p>
+  <div class="container">
+    <h1>Video Downloader</h1>
+    <p>Download videos from YouTube, Facebook, Twitter, Instagram and more</p>
+    
+    <div class="input-group">
+      <input type="text" id="videoUrl" placeholder="Paste video URL here...">
+    </div>
+    
+    <button id="downloadBtn">
+      <span id="btnText">Download Video</span>
+    </button>
+    
+    <div id="result"></div>
+    
+    <div class="download-options" id="downloadOptions" style="display:none;">
+      <h3>Available Formats:</h3>
+      <div id="formatList"></div>
+    </div>
   </div>
 
   <script>
     const videoUrl = document.getElementById('videoUrl');
     const downloadBtn = document.getElementById('downloadBtn');
-    const statusDiv = document.getElementById('status');
-    const platformTabs = document.querySelectorAll('.platform-tab');
+    const btnText = document.getElementById('btnText');
+    const resultDiv = document.getElementById('result');
+    const downloadOptions = document.getElementById('downloadOptions');
+    const formatList = document.getElementById('formatList');
 
-    // Platform selection
-    platformTabs.forEach(tab => {
-      tab.addEventListener('click', function() {
-        platformTabs.forEach(t => t.classList.remove('active'));
-        this.classList.add('active');
-        
-        // Update placeholder text
-        const platform = this.dataset.platform;
-        if (platform === 'all') {
-          videoUrl.placeholder = 'Paste video URL (YouTube, Twitter, Facebook, Instagram)...';
-        } else {
-          videoUrl.placeholder = `Paste ${platform.charAt(0).toUpperCase() + platform.slice(1)} video URL...`;
-        }
-      });
-    });
-
-    downloadBtn.addEventListener('click', function() {
+    downloadBtn.addEventListener('click', async () => {
       const url = videoUrl.value.trim();
       
       if (!url) {
-        showStatus('Please enter a video URL', 'error');
+        showResult('Please enter a video URL', 'error');
         return;
       }
 
-      // Validate URL format
       if (!isValidUrl(url)) {
-        showStatus('Please enter a valid URL', 'error');
+        showResult('Please enter a valid URL', 'error');
         return;
       }
 
-      // Check if URL matches selected platform
-      const activePlatform = document.querySelector('.platform-tab.active').dataset.platform;
-      if (activePlatform !== 'all' && !url.includes(activePlatform)) {
-        showStatus(`Please enter a ${activePlatform} URL`, 'error');
-        return;
-      }
-
-      // Disable button during processing
+      // Show loading state
       downloadBtn.disabled = true;
-      showStatus('Processing your request...', 'info');
+      btnText.innerHTML = '<span class="loading"></span> Processing...';
+      resultDiv.style.display = 'none';
+      downloadOptions.style.display = 'none';
 
-      // Determine the best download service based on platform
-      let serviceUrl;
-      if (url.includes('youtube.com') || url.includes('youtu.be')) {
-        serviceUrl = `https://www.y2mate.com/youtube/${encodeURIComponent(url)}`;
-      } else if (url.includes('twitter.com')) {
-        serviceUrl = `https://www.savetweetvid.com/download?url=${encodeURIComponent(url)}`;
-      } else if (url.includes('facebook.com')) {
-        serviceUrl = `https://www.getfvid.com/downloader?url=${encodeURIComponent(url)}`;
-      } else if (url.includes('instagram.com')) {
-        serviceUrl = `https://www.instavideosave.com/download.php?url=${encodeURIComponent(url)}`;
-      } else {
-        showStatus('Unsupported platform. Try YouTube, Twitter, Facebook, or Instagram.', 'error');
+      try {
+        // In a real implementation, you would call your backend API here
+        // For demonstration, we'll simulate API response
+        const videoInfo = await simulateApiCall(url);
+        
+        if (videoInfo.error) {
+          showResult(videoInfo.error, 'error');
+        } else {
+          showResult(`Success! Found: ${videoInfo.title}`, 'success');
+          showDownloadOptions(videoInfo.formats);
+        }
+      } catch (error) {
+        showResult(`Error: ${error.message}`, 'error');
+      } finally {
         downloadBtn.disabled = false;
-        return;
+        btnText.textContent = 'Download Video';
       }
-
-      // Open the download service in a new tab
-      setTimeout(() => {
-        window.open(serviceUrl, '_blank');
-        showStatus('Redirecting to download service...', 'success');
-        downloadBtn.disabled = false;
-      }, 1500);
     });
 
-    function showStatus(message, type) {
-      statusDiv.textContent = message;
-      statusDiv.className = type;
+    function showResult(message, type) {
+      resultDiv.textContent = message;
+      resultDiv.className = type;
+      resultDiv.style.display = 'block';
+    }
+
+    function showDownloadOptions(formats) {
+      formatList.innerHTML = '';
+      formats.forEach(format => {
+        const link = document.createElement('a');
+        link.href = '#';
+        link.className = 'download-btn';
+        link.textContent = `Download ${format.quality} (${format.type})`;
+        link.onclick = (e) => {
+          e.preventDefault();
+          alert(`In a real implementation, this would download the ${format.quality} version`);
+          // window.location.href = format.url;
+        };
+        formatList.appendChild(link);
+      });
+      downloadOptions.style.display = 'block';
     }
 
     function isValidUrl(string) {
@@ -195,6 +195,50 @@
       } catch (_) {
         return false;
       }
+    }
+
+    // Simulate API call - replace with actual backend integration
+    function simulateApiCall(url) {
+      return new Promise((resolve) => {
+        setTimeout(() => {
+          if (url.includes('youtube') || url.includes('youtu.be')) {
+            resolve({
+              title: 'YouTube Video',
+              formats: [
+                { quality: 'HD 1080p', type: 'MP4', url: '#' },
+                { quality: 'HD 720p', type: 'MP4', url: '#' },
+                { quality: 'SD 480p', type: 'MP4', url: '#' }
+              ]
+            });
+          } else if (url.includes('twitter') || url.includes('x.com')) {
+            resolve({
+              title: 'Twitter Video',
+              formats: [
+                { quality: 'Highest', type: 'MP4', url: '#' }
+              ]
+            });
+          } else if (url.includes('facebook')) {
+            resolve({
+              title: 'Facebook Video',
+              formats: [
+                { quality: 'HD', type: 'MP4', url: '#' },
+                { quality: 'SD', type: 'MP4', url: '#' }
+              ]
+            });
+          } else if (url.includes('instagram')) {
+            resolve({
+              title: 'Instagram Video',
+              formats: [
+                { quality: 'Original', type: 'MP4', url: '#' }
+              ]
+            });
+          } else {
+            resolve({
+              error: 'Unsupported website. Try YouTube, Twitter, Facebook or Instagram.'
+            });
+          }
+        }, 1500);
+      });
     }
   </script>
 </body>
