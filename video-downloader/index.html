@@ -51,20 +51,18 @@
     const downloadBtn = document.getElementById('downloadBtn');
     const loadingDiv = document.getElementById('loading');
 
-    downloadBtn.addEventListener('click', async function () {
+    downloadBtn.addEventListener('click', function () {
       const url = videoUrl.value.trim();
       if (url) {
         loadingDiv.style.display = 'block';
-        try {
-          const apiUrl = `https://api.vevioz.com/api/button/mp4?url=${encodeURIComponent(url)}`;
-          window.open(apiUrl, '_blank');
-        } catch (error) {
-          alert('An error occurred. Please try again.');
-        } finally {
-          loadingDiv.style.display = 'none';
-        }
+        
+        // Redirect to an alternative downloader service
+        const downloaderUrl = `https://www.y2mate.com/youtube/${encodeURIComponent(url)}`;
+        window.open(downloaderUrl, '_blank');
+
+        loadingDiv.style.display = 'none';
       } else {
-        alert('Please enter a video URL.');
+        alert('Please enter a valid video URL.');
       }
     });
   </script>
