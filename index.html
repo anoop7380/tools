@@ -28,6 +28,7 @@
       color: white;
       padding: 40px 20px;
       text-align: center;
+      position: relative;
     }
 
     header h1 {
@@ -38,6 +39,22 @@
     header p {
       margin: 10px 0 0;
       font-size: 1.2rem;
+    }
+
+    .menu-toggle {
+      display: none; /* Hidden by default */
+      flex-direction: column;
+      cursor: pointer;
+      position: absolute;
+      top: 20px;
+      left: 20px;
+    }
+
+    .menu-toggle .bar {
+      width: 25px;
+      height: 3px;
+      background-color: white;
+      margin: 4px 0;
     }
 
     .container {
@@ -164,50 +181,57 @@
       background-color: #45a049;
     }
 
-    /* Compact Tool List Styles */
-    .compact-tools {
-      display: none; /* Hidden by default */
-      flex-wrap: wrap;
-      gap: 10px;
-      justify-content: center;
-      margin-top: 20px;
-    }
+    /* Mobile styles */
+    @media (max-width: 768px) {
+      header h1 {
+        font-size: 2rem;
+      }
 
-    .compact-tool {
-      display: flex;
-      align-items: center;
-      background-color: white;
-      border-radius: 5px;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-      padding: 10px;
-      width: 200px;
-      transition: transform 0.3s ease;
-    }
+      header p {
+        font-size: 1rem;
+      }
 
-    .compact-tool:hover {
-      transform: translateY(-5px);
-    }
+      .menu-toggle {
+        display: flex; /* Show on mobile */
+      }
 
-    .compact-tool i {
-      font-size: 24px;
-      color: #4CAF50;
-      margin-right: 10px;
-    }
+      .tools {
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+      }
 
-    .compact-tool a {
-      color: #333;
-      text-decoration: none;
-      font-size: 0.9rem;
-    }
+      .tool-card {
+        width: 90%;
+        padding: 15px;
+      }
 
-    .compact-tool a:hover {
-      text-decoration: underline;
+      .tool-card i {
+        font-size: 36px;
+      }
+
+      .tool-card h3 {
+        font-size: 1.2rem;
+      }
+
+      .tool-card p {
+        font-size: 0.9rem;
+      }
+
+      footer {
+        padding: 10px;
+      }
     }
   </style>
 </head>
 <body>
   <!-- Header -->
   <header>
+    <div class="menu-toggle" id="mobile-menu">
+      <span class="bar"></span>
+      <span class="bar"></span>
+      <span class="bar"></span>
+    </div>
     <h1>ProTools</h1>
     <p>Your Ultimate Online Toolkit for All Your Needs</p>
   </header>
@@ -375,6 +399,11 @@
       } else {
         compactTools.style.display = 'none'; // Hide compact tools
       }
+    });
+
+    // Mobile menu functionality
+    document.getElementById('mobile-menu').addEventListener('click', function() {
+      alert('Mobile menu clicked!'); // Replace with your menu logic
     });
   </script>
 </body>
